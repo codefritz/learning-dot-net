@@ -45,7 +45,22 @@ namespace LearningDotNet
             Console.Write("Bitte geben Sie ein Zahl mit zwei Stellen ein (e.g. 22): ");
             var zahl = Console.ReadLine();
 
-            printTwoDigitToWord(zahl);
+            if (zahl.Length == 1)
+            {
+                Console.Write(singleDigitToWord[zahl[0].ToString()]);
+            }
+            if (zahl.Length == 2)
+            {
+                printTwoDigitToWord(zahl);
+                
+            }
+            if (zahl.Length == 3)
+            {
+                Console.Write(singleDigitToWord[zahl[0].ToString()]);
+                Console.Write("hundert");
+                printTwoDigitToWord(zahl.Substring(1,2));
+            }
+
   
         }
 
@@ -53,7 +68,7 @@ namespace LearningDotNet
         {
             if (string.IsNullOrEmpty(zahl) || zahl.Length != 2)
             {
-                Console.WriteLine("Eingabe hat keine 2 Stellen.");
+                Console.WriteLine("ERROR: Eingabe hat keine 2 Stellen.");
                 return;
 
             }
@@ -66,10 +81,13 @@ namespace LearningDotNet
 
             var first = zahl[0].ToString();
             var last = zahl[1].ToString();
-            Console.Write(singleDigitToWord[last]);
-            if (first != "1") { 
-                Console.Write("und");
+            if (last != "0") {
+                Console.Write(singleDigitToWord[last]);
+                if (first != "1") { 
+                    Console.Write("und");
+                }
             }
+        
             Console.Write(twoDigitToWord[first]);
         }
 

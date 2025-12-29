@@ -13,7 +13,7 @@ namespace LearningDotNet
             Console.WriteLine("2. Zahlenwortkonvertierer (German Number to Word)");
             Console.Write("Choose a program (1 or 2): ");
 
-            string choice = Console.ReadLine();
+            string choice = args.Length >= 1 ? args[0] : Console.ReadLine();
 
             switch (choice)
             {
