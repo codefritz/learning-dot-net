@@ -7,7 +7,7 @@ namespace LearningDotNet
     {
         private static readonly Dictionary<string, string> singleDigitToWord = new()
         {
-            ["1"] = "eins",
+            ["1"] = "ein(s)",
             ["2"] = "zwei",
             ["3"] = "drei",
             ["4"] = "vier",
@@ -36,8 +36,8 @@ namespace LearningDotNet
         private static readonly Dictionary<int, string> stelleWord = new()
         {
             [0] = "tausend",
-            [1] = "millionen",
-            [2] = "milliarden" 
+            [1] = "million(en)",
+            [2] = "milliarde(n)" 
         };
 
         private static readonly Dictionary<string, string> fixedWords = new()
@@ -66,7 +66,7 @@ namespace LearningDotNet
 
             result = printThreeLengthNumber(zahl) + result;
 
-            Console.Write(result);
+            Console.WriteLine(result);
         }
 
         static string printThreeLengthNumber(string zahl)
