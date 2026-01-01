@@ -1,4 +1,6 @@
 
+using System.Text;
+
 namespace LearningDotNet
 {
     public class Zahlenwortkonvertierer
@@ -31,7 +33,14 @@ namespace LearningDotNet
             ["0"] = "null",
         };
 
-        private static readonly Dictionary<string, string> fixedWords = new ()
+        private static readonly Dictionary<int, string> stelleWord = new()
+        {
+            [0] = "tausend",
+            [1] = "millionen",
+            [2] = "milliarden" 
+        };
+
+        private static readonly Dictionary<string, string> fixedWords = new()
         {
             ["11"] = "elf",
             ["12"] = "zwölf"
@@ -43,34 +52,42 @@ namespace LearningDotNet
             Console.WriteLine("===============================");
             
             var zahl = string.IsNullOrEmpty(arg) ? readFromCmd() : arg;
-
-            W(zahl + " -> ");
-
-            var arr = Enumerable.Range(0, zahl.Length / 3).Select (x => zahl.Substring(x * 3, 3)).ToArray();
-
-            foreach (var item in arr)
+            Console.Write(zahl + " -> ");
+            var result = "";
+  
+            var stelle = 0;
+            while(zahl.Length > 3)
             {
-                printThreeLengthNumber(item);
+                result = printThreeLengthNumber(zahl.Substring(zahl.Length - 3, 3)) + result;
+                result = stelleWord[stelle] + "_" + result;
+                stelle += 1;
+                zahl = zahl.Substring(0, zahl.Length - 3);
             }
+
+            result = printThreeLengthNumber(zahl) + result;
+
+            Console.Write(result);
         }
 
-        static void printThreeLengthNumber(string zahl)
+        static string printThreeLengthNumber(string zahl)
         {
+            StringBuilder stringBuilder = new StringBuilder();
             if (zahl.Length == 1)
             {
-                W(singleDigitToWord[zahl[0].ToString()]);
+                stringBuilder.Append(singleDigitToWord[zahl[0].ToString()]);
             }
             if (zahl.Length == 2)
             {
-                printTwoDigitToWord(zahl);
+                stringBuilder.Append(printTwoDigitToWord(zahl));
                 
             }
             if (zahl.Length == 3)
             {
-                W(singleDigitToWord[zahl[0].ToString()]);
-                W("hundert");
-                printTwoDigitToWord(zahl.Substring(1,2));
+                stringBuilder.Append(singleDigitToWord[zahl[0].ToString()]);
+                stringBuilder.Append("hundert");
+                stringBuilder.Append(printTwoDigitToWord(zahl.Substring(1,2)));
             }
+            return stringBuilder.ToString();
         }
 
         static string readFromCmd()
@@ -79,35 +96,30 @@ namespace LearningDotNet
             return Console.ReadLine()?.Trim();
         }
 
-        static void printTwoDigitToWord(string zahl)
+        static string printTwoDigitToWord(string zahl)
         {
             if (string.IsNullOrEmpty(zahl) || zahl.Length != 2)
             {
                 Console.WriteLine("ERROR: Eingabe hat keine 2 Stellen.");
-                return;
-
+                return "%#$";
             }
 
             if (fixedWords.ContainsKey(zahl))
             {
-                W(fixedWords[zahl]);
-                return;
+                return fixedWords[zahl];
             }
 
             var first = zahl[0].ToString();
             var last = zahl[1].ToString();
+            var perfix = "";
             if (last != "0") {
-                W(singleDigitToWord[last]);
+                perfix += singleDigitToWord[last];
                 if (first != "1") { 
-                    W("und");
+                    perfix += "und";
                 }
             }
         
-            W(twoDigitToWord[first]);
-        }
-
-        static void W(object x){
-            Console.Write(x);
+            return perfix += twoDigitToWord[first];
         }
     }
 }
