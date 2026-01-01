@@ -37,17 +37,28 @@ namespace LearningDotNet
             ["12"] = "zwölf"
         };
 
-        public static void RunZahlenwortkonvertierer()
+        public static void RunZahlenwortkonvertierer(string arg)
         {
             Console.WriteLine("Zahlenwortkonvertierer 1.0");
             Console.WriteLine("===============================");
+            
+            var zahl = string.IsNullOrEmpty(arg) ? readFromCmd() : arg;
 
-            Console.Write("Bitte geben Sie ein Zahl mit zwei Stellen ein (e.g. 22): ");
-            var zahl = Console.ReadLine();
+            W(zahl + " -> ");
 
+            var arr = Enumerable.Range(0, zahl.Length / 3).Select (x => zahl.Substring(x * 3, 3)).ToArray();
+
+            foreach (var item in arr)
+            {
+                printThreeLengthNumber(item);
+            }
+        }
+
+        static void printThreeLengthNumber(string zahl)
+        {
             if (zahl.Length == 1)
             {
-                Console.Write(singleDigitToWord[zahl[0].ToString()]);
+                W(singleDigitToWord[zahl[0].ToString()]);
             }
             if (zahl.Length == 2)
             {
@@ -56,12 +67,16 @@ namespace LearningDotNet
             }
             if (zahl.Length == 3)
             {
-                Console.Write(singleDigitToWord[zahl[0].ToString()]);
-                Console.Write("hundert");
+                W(singleDigitToWord[zahl[0].ToString()]);
+                W("hundert");
                 printTwoDigitToWord(zahl.Substring(1,2));
             }
+        }
 
-  
+        static string readFromCmd()
+        {
+            Console.Write("Bitte geben Sie ein Zahl mit zwei Stellen ein (e.g. 22): ");
+            return Console.ReadLine()?.Trim();
         }
 
         static void printTwoDigitToWord(string zahl)
@@ -75,23 +90,23 @@ namespace LearningDotNet
 
             if (fixedWords.ContainsKey(zahl))
             {
-                w(fixedWords[zahl]);
+                W(fixedWords[zahl]);
                 return;
             }
 
             var first = zahl[0].ToString();
             var last = zahl[1].ToString();
             if (last != "0") {
-                Console.Write(singleDigitToWord[last]);
+                W(singleDigitToWord[last]);
                 if (first != "1") { 
-                    Console.Write("und");
+                    W("und");
                 }
             }
         
-            Console.Write(twoDigitToWord[first]);
+            W(twoDigitToWord[first]);
         }
 
-        static void w(object x){
+        static void W(object x){
             Console.Write(x);
         }
     }
