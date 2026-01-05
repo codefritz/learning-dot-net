@@ -5,7 +5,7 @@ Repo with some basic dotNet classes to learn and play with _dotNet_.
 ### Build and run
 
 ```
-doenet build
+dodnet build
 dodnet run
 ```
 
