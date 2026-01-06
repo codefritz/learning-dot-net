@@ -221,3 +221,5 @@ dotnet test                                     # All tests
 dotnet test --filter "PascalTriangle"          # Specific tests
 dotnet test --verbosity detailed               # Detailed output
 ```
+- Always use descriptive variable names
+- Avoid comments by using meaningful variable and method names
