@@ -17,16 +17,16 @@ namespace LearningDotNet.Core.Mathematics
 
             var triangle = new int[depth][];
 
-            for (int i = 0; i < depth; i++)
+            for (int rowIndex = 0; rowIndex < depth; rowIndex++)
             {
-                triangle[i] = new int[i + 1];
-                triangle[i][0] = 1; // First element is always 1
-                triangle[i][i] = 1; // Last element is always 1
+                triangle[rowIndex] = new int[rowIndex + 1];
+                triangle[rowIndex][0] = 1; // First element is always 1
+                triangle[rowIndex][rowIndex] = 1; // Last element is always 1
 
                 // Fill middle elements
-                for (int j = 1; j < i; j++)
+                for (int columnIndex = 1; columnIndex < rowIndex; columnIndex++)
                 {
-                    triangle[i][j] = triangle[i - 1][j - 1] + triangle[i - 1][j];
+                    triangle[rowIndex][columnIndex] = triangle[rowIndex - 1][columnIndex - 1] + triangle[rowIndex - 1][columnIndex];
                 }
             }
 
@@ -46,10 +46,10 @@ namespace LearningDotNet.Core.Mathematics
             var row = new int[rowIndex + 1];
             row[0] = 1;
 
-            for (int i = 1; i <= rowIndex; i++)
+            for (int columnIndex = 1; columnIndex <= rowIndex; columnIndex++)
             {
                 // Calculate each element using the formula: C(n,k) = C(n,k-1) * (n-k+1) / k
-                row[i] = (int)((long)row[i - 1] * (rowIndex - i + 1) / i);
+                row[columnIndex] = (int)((long)row[columnIndex - 1] * (rowIndex - columnIndex + 1) / columnIndex);
             }
 
             return row;
