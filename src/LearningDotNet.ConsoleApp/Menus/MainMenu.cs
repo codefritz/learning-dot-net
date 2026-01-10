@@ -19,8 +19,9 @@ namespace LearningDotNet.ConsoleApp.Menus
             Console.WriteLine("2. German Number to Word Converter");
             Console.WriteLine("3. Pascal Triangle Generator");
             Console.WriteLine("4. Binary String Demo");
+            Console.WriteLine("5. German Word to Number Parser");
 
-            Console.Write("Choose a program (1-4): ");
+            Console.Write("Choose a program (1-5): ");
 
             string choice = args.Length >= 1 ? args[0] : Console.ReadLine() ?? string.Empty;
             Console.WriteLine($"Starting with selection: {choice}\n");
@@ -41,8 +42,12 @@ namespace LearningDotNet.ConsoleApp.Menus
                 case "4":
                     BinaryStringDemo.Run();
                     break;
+                case "5":
+                    string? germanWordArg = args.Length >= 2 ? args[1] : null;
+                    GermanNumberParserDemo.Run(germanWordArg);
+                    break;
                 default:
-                    Console.WriteLine("Invalid choice! Please select 1-4.");
+                    Console.WriteLine("Invalid choice! Please select 1-5.");
                     break;
             }
         }
